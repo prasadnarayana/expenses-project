@@ -1,0 +1,55 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h2 class="display-5 text-center">Add Expense</h2>
+      <form #expenseForm="ngForm" (ngSubmit)="onSubmit(expenseForm)" autocomplete="off">
+        <div class="form-group">
+          <input 
+            type="hidden" name="id" #id="ngModel"
+            [(ngModel)]="exService.selectedExpense.id"
+          >
+          </div>
+        <div class="form-group">
+          <label for="task">Task</label>
+          <input 
+            type="text" class="form-control" id="task" 
+            placeholder="Enter task to which you spent money"
+            #task="ngModel" name="task" required
+            [(ngModel)]="exService.selectedExpense.task"
+          >
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input 
+            type="email" class="form-control" id="amount" 
+            placeholder="Enter amount you spent"
+            #amount="ngModel" name="amount" required
+            [(ngModel)]="exService.selectedExpense.amount"
+          >
+        </div>
+        <div class="form-group">
+          <label>Select Date</label>
+          <input 
+            type="date" id="dt" max="3000-12-31" 
+            min="1000-01-01" class="form-control"
+            #date="ngModel" name="date" required
+            [ngModel]="exService.selectedExpense.date | date:'yyyy-MM-dd'"
+            (ngModelChange)="exService.selectedExpense.date = $event"
+          >
+        </div>
+        <div class="form-group">
+          <label for="comment">Comment</label>
+          <textarea 
+            class="form-control" id="comment" rows="3" 
+            placeholder="Comments about expense"
+            #comment="ngModel" name="comment" required max="50"
+            [(ngModel)]="exService.selectedExpense.comment"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary px-5">Add</button>
+      </form>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

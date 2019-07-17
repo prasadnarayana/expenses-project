@@ -1,0 +1,11 @@
+.padding {
+    padding: 94px 0;
+}
+
+input.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+input.ng-valid {
+    border-left: 5px solid green;
+}

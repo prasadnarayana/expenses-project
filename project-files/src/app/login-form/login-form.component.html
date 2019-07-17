@@ -1,0 +1,35 @@
+<div class="container padding">
+  <div class="row">
+    <div class="col-md-3 col-sm-2"></div>
+    <div class="col-md-6 col-sm-8">
+      <h2 class="text-center">Sign In</h2>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)" autocomplete="off">
+        <div class="form-group">
+          <label for="uname">Username</label>
+          <input 
+            type="text" class="form-control" id="uname" placeholder="Enter username" required
+            name="uname" ngModel
+            #unameRef="ngModel"
+          >
+          <div class="alert alert-danger" [hidden]="unameRef.untouched || unameRef.valid">
+            Username is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input 
+            type="password" class="form-control" id="pwd" placeholder="Enter password" required
+            name="password" ngModel
+            #pwdRef="ngModel"
+          >
+          <div class="alert alert-danger" [hidden]="pwdRef.untouched || pwdRef.valid">
+            Password is required
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <p class="text-center text-danger mt-2">{{invalidUser}}</p>
+      </form>
+    </div>
+    <div class="col-md-3 col-sm-2"></div>
+  </div>
+</div>
