@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ExpensesService } from '../expenses.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpHeaders } from '@angular/common/http';
+import { IExpenses } from '../expenses';
 
 let headerObj = new HttpHeaders().set("Authorization", "Bearer " + sessionStorage.getItem("token"));
 
@@ -14,7 +15,7 @@ const httpOptions = { headers: headerObj };
   styleUrls: ['./expenses.component.css'],
 })
 export class ExpensesComponent implements OnInit {
-  expenses: any[];
+  expenses: IExpenses[];
 
   constructor(
     private router: Router, 
@@ -50,7 +51,7 @@ export class ExpensesComponent implements OnInit {
     });
   }
 
-  onEdit(expense: any) {
+  onEdit(expense: IExpenses) {
     this.router.navigate(["/addexpenses", {
       id: expense.id,
       task: expense.task,
@@ -60,9 +61,9 @@ export class ExpensesComponent implements OnInit {
     }]);
   }
 
-  onDelete(expense: any) {
+  onDelete(expense: IExpenses) {
     if (confirm("Are you sure to delete this record ?") == true) {
-      this.exService.deleteExpense(expense).subscribe((res) => {
+      this.exService.deleteExpense(expense, httpOptions).subscribe((res) => {
         this.toastr.success("Deleted Successfully.");
         this.loadExpenses();
       });

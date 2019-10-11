@@ -44,7 +44,7 @@ app.get("/getAllExpenses", verifyToken, (req, res) => {
 });
 
 // Get an single expense from expenses table
-app.get("/getSingleExpenses/:id", (req, res) => {
+app.get("/getSingleExpenses/:id", verifyToken, (req, res) => {
     con.query("SELECT * FROM expenses WHERE id = ?", [req.params.id], (error, rows, fields) => {
         if (!error) {
             res.send(rows);
@@ -56,7 +56,7 @@ app.get("/getSingleExpenses/:id", (req, res) => {
 });
 
 // Delete an expense from expenses table
-app.delete("/deleteExpense/:id", (req, res) => {
+app.delete("/deleteExpense/:id", verifyToken, (req, res) => {
     con.query("DELETE FROM expenses WHERE id = ?", [req.params.id], (error) => {
         if (!error) {
             res.send({ deleted: true });
@@ -68,7 +68,7 @@ app.delete("/deleteExpense/:id", (req, res) => {
 });
 
 // Insert an expense into expeses table
-app.post("/addExpense", (req, res) => {
+app.post("/addExpense", verifyToken, (req, res) => {
     con.query("INSERT INTO expenses (task, amount, date, comment) VALUES(?, ?, ?, ?)", [req.body.task, req.body.amount, req.body.date, req.body.comment], (error) => {
         if (!error) {
             res.send({ inserted: true });
@@ -80,7 +80,7 @@ app.post("/addExpense", (req, res) => {
 });
 
 // Update an expense in expenses table
-app.put("/updateExpnse/:id", (req, res) => {
+app.put("/updateExpnse/:id", verifyToken, (req, res) => {
     con.query("UPDATE expenses SET task = ?, amount = ?, date = ?, comment = ? WHERE id = ?", [req.body.task, req.body.amount, req.body.date, req.body.comment, req.params.id], (error) => {
         if (!error) {
             res.send({ updated: true });
@@ -93,7 +93,6 @@ app.put("/updateExpnse/:id", (req, res) => {
 
 // Login function
 app.post("/signin", (req, res) => {
-    console.log(req.body);
     con.query("SELECT * FROM users WHERE username = ?", [req.body.uname], (error, rows, fields) => {
         if (!error) {
             if (rows.length > 0) {

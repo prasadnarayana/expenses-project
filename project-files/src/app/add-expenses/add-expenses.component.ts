@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ExpensesService } from '../expenses.service';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { resetFakeAsyncZone } from '@angular/core/testing';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
+
+let headerObj = new HttpHeaders().set("Authorization", "Bearer " + sessionStorage.getItem("token"));
+
+const httpOptions = { headers: headerObj };
 
 @Component({
   selector: 'app-add-expenses',
@@ -37,13 +41,13 @@ export class AddExpensesComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (form.value.id) {
-      this.exService.updateExpense(form.value).subscribe((res) => {
+      this.exService.updateExpense(form.value, httpOptions).subscribe((res) => {
         form.reset();
         //console.log(res);
         this.toastr.success("Updated Successfully.");
       });
     } else {
-      this.exService.insertExpense(form.value).subscribe((res) => {
+      this.exService.insertExpense(form.value, httpOptions).subscribe((res) => {
         form.reset();
         //console.log(res);
         this.toastr.success("Inserted Successfully.");
